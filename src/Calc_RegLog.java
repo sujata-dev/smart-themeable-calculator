@@ -2,7 +2,8 @@ import java.sql.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Calc_RegLog implements ActionListener {
+public class Calc_RegLog implements ActionListener
+{
     Frame f1 = new Frame();
     Button b1 = new Button("Open Smart Themeable Calculator");
 
@@ -45,8 +46,10 @@ public class Calc_RegLog implements ActionListener {
     static final String USER = "root";
     static final String PASS = "root";
 
-    Calc_RegLog() {
-        for(int i = 0; i < l.length; i++) { // for labels
+    Calc_RegLog()
+    {
+        for(int i = 0; i < l.length; i++) // for labels
+        {
             labels[i] = new Label(l[i]);
 
             f1.add(labels[i]);
@@ -63,7 +66,8 @@ public class Calc_RegLog implements ActionListener {
                 labels[i].setFont(new Font("serif", Font.PLAIN, 30));
         }
 
-        for(int i = 0; i < t.length; i++) { // for textfields
+        for(int i = 0; i < t.length; i++) // for textfields
+        {
             text[i] = new TextField(t[i]);
 
             f1.add(text[i]);
@@ -76,7 +80,8 @@ public class Calc_RegLog implements ActionListener {
                 text[i].setEchoChar('*');
         }
 
-        for(int i = 0; i < b.length; i++) { // for buttons
+        for(int i = 0; i < b.length; i++) // for buttons
+        {
             buttons[i] = new Button(b[i]);
 
             f1.add(buttons[i]);
@@ -86,7 +91,8 @@ public class Calc_RegLog implements ActionListener {
             buttons[i].setBackground(Color.cyan.darker());
         }
 
-        for(int i = 0; i < l1.length; i++) { // for status labels
+        for(int i = 0; i < l1.length; i++) // for status labels
+        {
             status[i] = new Label(l1[i]);
             status[i].setFont(new Font("serif", Font.BOLD, 13));
             status[i].setForeground(Color.white);
@@ -131,14 +137,17 @@ public class Calc_RegLog implements ActionListener {
         f1.setSize(650, 400);
         f1.setTitle("Smart Themeable Calculator Login/Register Page");
         f1.setBackground(Color.gray.darker());
-        f1.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
+        f1.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent we)
+            {
                 System.exit(0);
             }
         });
     }
 
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e)
+    {
         Connection con = null;
         Statement stmt = null;
 
@@ -147,8 +156,10 @@ public class Calc_RegLog implements ActionListener {
         String sql, s1, s2, s3, s4, s5, s6, s7;
 
         // Registration
-        if(e.getSource() == buttons[1]) {
-            try {
+        if(e.getSource() == buttons[1])
+        {
+            try
+            {
                 Class.forName(JDBC_DRIVERNAME);
 
                 con = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -160,8 +171,10 @@ public class Calc_RegLog implements ActionListener {
                 s4 = text[5].getText();
 
                 // Password and confirmed password should match
-                if(!s3.equals("")) {
-                    if(s3.equals(s4)) {
+                if(!s3.equals(""))
+                {
+                    if(s3.equals(s4))
+                    {
                         sql = "insert into registration " +
                               "values('" + s1 + "','" + s2 + "','" + s3 + "','"
                                                                    + s4 + "')";
@@ -175,7 +188,9 @@ public class Calc_RegLog implements ActionListener {
 
                         status[1].setBounds(310, 330, 200, 40);
                         status[1].setVisible(true);
-                    } else {
+                    }
+                    else
+                    {
                         for(i = 1; i <= 2; i++)
                             status[i].setVisible(false);
 
@@ -184,7 +199,9 @@ public class Calc_RegLog implements ActionListener {
                         status[2].setBounds(330, 330, 200, 40);
                         status[2].setVisible(true);
                     }
-                } else {
+                }
+                else
+                {
                     for(i = 1; i <= 2; i++)
                         status[i].setVisible(false);
 
@@ -198,19 +215,24 @@ public class Calc_RegLog implements ActionListener {
 
                 con.close();
                 stmt.close();
-            } catch(SQLException se) {
+            }
+            catch(SQLException se)
+            {
                 f1.add(status[2]);
 
                 status[2].setBounds(330, 330, 200, 40);
 
                 for(i = 2; i <= 5; i++)
                     text[i].setText("");
-            } catch(Exception e1) {}
+            }
+            catch(Exception e1) {}
         }
 
         // Login
-        if(e.getSource() == buttons[0]) {
-            try {
+        if(e.getSource() == buttons[0])
+        {
+            try
+            {
                 Class.forName(JDBC_DRIVERNAME);
 
                 con = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -227,12 +249,15 @@ public class Calc_RegLog implements ActionListener {
 
                 s6 = text[1].getText();
 
-                while(rs.next()) {
+                while(rs.next())
+                {
                     s7 = rs.getString("password");
 
-                    if(s7.equals(s6)) {
+                    if(s7.equals(s6))
+                    {
                         // removing other labels
-                        for(i = 0; i <= 4; i++) {
+                        for(i = 0; i <= 4; i++)
+                        {
                             if(i == 3 || i == 4)
                                 status[i].setVisible(false);
                         }
@@ -244,9 +269,11 @@ public class Calc_RegLog implements ActionListener {
                 }
 
                 // if email or password is wrong
-                if(flag == 0) {
+                if(flag == 0)
+                {
                     // removing other labels
-                    for(i = 0; i <= 4; i++) {
+                    for(i = 0; i <= 4; i++)
+                    {
                         if(i == 0 || i == 3)
                             status[i].setVisible(false);
                     }
@@ -254,7 +281,9 @@ public class Calc_RegLog implements ActionListener {
 
                     status[4].setBounds(45, 300, 190, 40);
                     status[4].setVisible(true);
-                } else {
+                }
+                else
+                {
                     f1.add(b1);
 
                     b1.setFont(new Font("serif", Font.BOLD, 13));
@@ -270,9 +299,12 @@ public class Calc_RegLog implements ActionListener {
                 rs.close();
                 con.close();
                 stmt.close();
-            } catch(SQLException se1) {
+            }
+            catch(SQLException se1)
+            {
                 // removing other labels
-                for(i = 0; i <= 4; i++) {
+                for(i = 0; i <= 4; i++)
+                {
                     if(i == 0 || i == 4)
                         status[i].setVisible(false);
                 }
@@ -284,22 +316,26 @@ public class Calc_RegLog implements ActionListener {
 
                 for(i = 0; i <= 1; i++)
                     text[i].setText("");
-            } catch(Exception e2) {}
+            }
+            catch(Exception e2) {}
         }
 
         // opening STC
-        if(e.getSource() == b1) {
+        if(e.getSource() == b1)
+        {
             Calculator c = new Calculator();
             //f.setVisible(true);
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         Calc_RegLog cr = new Calc_RegLog();
     }
 }
 
-class Calculator implements ActionListener {
+class Calculator implements ActionListener
+{
     int ch;
     double ans;
 
@@ -323,8 +359,10 @@ class Calculator implements ActionListener {
 
     GridLayout g = new GridLayout(5, 5, 10, 10);
 
-    Calculator() {
-        for(int i = 0; i < dop.length; i++) {
+    Calculator()
+    {
+        for(int i = 0; i < dop.length; i++)
+        {
             digitop[i] = new Button(dop[i]);
             digitop[i].setForeground(Color.white);
             digitop[i].setBackground(Color.darkGray);
@@ -334,8 +372,10 @@ class Calculator implements ActionListener {
             digitop[i].addActionListener(this);
         }
 
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
+        f.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent we)
+            {
                 System.exit(0);
             }
         });
@@ -354,66 +394,68 @@ class Calculator implements ActionListener {
         f.setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e)
+    {
         int i;
 
-        for(i = 0; i < dop.length; i++) {
-            if(e.getSource() == digitop[i]) {
+        for(i = 0; i < dop.length; i++)
+        {
+            if(e.getSource() == digitop[i])
+            {
                 if(i !=  0 && i !=  1 && i !=  2 && i !=  3 && i !=  4 &&
                    i !=  8 && i !=  9 && i != 13 && i != 14 && i != 18 &&
-                   i != 19 && i != 22 && i != 23 && i != 24) {
+                   i != 19 && i != 22 && i != 23 && i != 24)
+                {
                     s3 = tf.getText();
                     s4 = s3 + dop[i];
                     tf.setText(s4);
-                } else if(i != 1) {
+                }
+                else if(i != 1)
+                {
                     s1 = tf.getText();
                     tf.setText("");
                     ch = i;
-                } else if(i == 1) {
-                    switch(ch) {
-                    case 2:
-                        s2 = tf.getText();
-                        ans = Double.parseDouble(s1) % Double.parseDouble(s2);
-                        break;
-                    case 3:
-                        ans = Math.sqrt(Double.parseDouble(s1));
-                        break;
-                    case 4:
-                        ans = Math.log10(Double.parseDouble(s1));
-                        break;
-                    case 8:
-                        s2 = tf.getText();
-                        ans = Double.parseDouble(s1) / Double.parseDouble(s2);
-                        break;
-                    case 9:
-                        ans = Math.log(Double.parseDouble(s1));
-                        break;
-                    case 13:
-                        s2 = tf.getText();
-                        ans = Double.parseDouble(s1) * Double.parseDouble(s2);
-                        break;
-                    case 14:
-                        ans = Math.sin(Double.parseDouble(s1));
-                        break;
-                    case 18:
-                        s2 = tf.getText();
-                        ans = Double.parseDouble(s1) + Double.parseDouble(s2);
-                        break;
-                    case 19:
-                        ans = Math.cos(Double.parseDouble(s1));
-                        break;
-                    case 22:
-                        s2 = tf.getText();
-                        ans = Math.pow( Double.parseDouble(s1) ,
-                                        Double.parseDouble(s2) );
-                        break;
-                    case 23:
-                        s2 = tf.getText();
-                        ans = Double.parseDouble(s1) - Double.parseDouble(s2);
-                        break;
-                    case 24:
-                        ans = Math.tan(Double.parseDouble(s1));
-                        break;
+                }
+                else if(i == 1)
+                {
+                    switch(ch)
+                    {
+                        case 2: s2 = tf.getText();
+                                ans = Double.parseDouble(s1) %
+                                        Double.parseDouble(s2);
+                                break;
+                        case 3: ans = Math.sqrt(Double.parseDouble(s1));
+                                break;
+                        case 4: ans = Math.log10(Double.parseDouble(s1));
+                                break;
+                        case 8: s2 = tf.getText();
+                                ans = Double.parseDouble(s1) /
+                                        Double.parseDouble(s2);
+                                break;
+                        case 9: ans = Math.log(Double.parseDouble(s1));
+                                break;
+                        case 13:    s2 = tf.getText();
+                                    ans = Double.parseDouble(s1) *
+                                            Double.parseDouble(s2);
+                                    break;
+                        case 14:    ans = Math.sin(Double.parseDouble(s1));
+                                    break;
+                        case 18:    s2 = tf.getText();
+                                    ans = Double.parseDouble(s1) +
+                                        Double.parseDouble(s2);
+                                    break;
+                        case 19:    ans = Math.cos(Double.parseDouble(s1));
+                                    break;
+                        case 22:    s2 = tf.getText();
+                                    ans = Math.pow( Double.parseDouble(s1) ,
+                                            Double.parseDouble(s2) );
+                                    break;
+                        case 23:    s2 = tf.getText();
+                                    ans = Double.parseDouble(s1) -
+                                            Double.parseDouble(s2);
+                                    break;
+                        case 24:    ans = Math.tan(Double.parseDouble(s1));
+                                    break;
                     }
                     tf.setText(Double.toString(ans));
                 }
