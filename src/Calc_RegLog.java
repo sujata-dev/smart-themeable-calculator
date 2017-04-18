@@ -48,6 +48,7 @@ public class Calc_RegLog implements ActionListener
 
     Calc_RegLog()
     {
+        int y = 120;
         for(int i = 0; i < l.length; i++) // for labels
         {
             labels[i] = new Label(l[i]);
@@ -63,7 +64,11 @@ public class Calc_RegLog implements ActionListener
             else if(i > 1 && i < 8)
                 labels[i].setFont(new Font("serif", Font.BOLD, 13));
             else if(i >= 8)
+            {
                 labels[i].setFont(new Font("serif", Font.PLAIN, 30));
+                labels[i].setBounds(280, y, 30, 34); // for mid line
+                y += 25;
+            }
         }
 
         for(int i = 0; i < t.length; i++) // for textfields
@@ -121,17 +126,6 @@ public class Calc_RegLog implements ActionListener
         text[4].setBounds(460, 208, 148, 20); // registration password
         text[5].setBounds(460, 243, 148, 20); // registration password confirm
         buttons[1].setBounds(390, 290, 80, 40);
-
-        // Mid line
-        labels[8].setBounds(280, 120, 30, 34);
-        labels[9].setBounds(280, 145, 30, 34);
-        labels[10].setBounds(280, 170, 30, 34);
-        labels[11].setBounds(280, 195, 30, 34);
-        labels[12].setBounds(280, 220, 30, 34);
-        labels[13].setBounds(280, 245, 30, 34);
-        labels[14].setBounds(280, 270, 30, 34);
-        labels[15].setBounds(280, 295, 30, 34);
-        labels[16].setBounds(280, 320, 30, 34);
 
         f1.setVisible(true);
         f1.setSize(650, 400);
@@ -320,11 +314,10 @@ public class Calc_RegLog implements ActionListener
             catch(Exception e2) {}
         }
 
-        // opening STC
+        // opening Smart Themeable Calculator
         if(e.getSource() == b1)
         {
             Calculator c = new Calculator();
-            //f.setVisible(true);
         }
     }
 
@@ -349,7 +342,63 @@ class Calculator implements ActionListener
         "0", ".", "^", "-", "tan"
     };
 
+    String u[] = {
+        "Length",
+        "Temperature",
+        "Base"
+    };
+
+    String lib[] = {
+        "Constants",
+        "Formulae",
+        "Trignometric Help"
+    };
+
+    String th[] = {
+        "Scarlet",
+        "Azure",
+        "Forest",
+        "Shadow"
+    };
+
+    String c[] = {
+        "π",
+        "e",
+        "Ω",
+        "i",
+        "h",
+        "G",
+        "c"
+    };
+
+    String cname[] = {
+        "pi",
+        "Euler's Number",
+        "Omega",
+        "Imaginary unit",
+        "Planck’s constant",
+        "Gravitational constant",
+        "Speed of light"
+    };
+
+    String cvalue[] = {
+        "3.14159",
+        "2.71828",
+        "0.56714",
+        "√-1",
+        "6.62607 x 10^(-34) Js",
+        "6.67408 x 10^8 Nm^2/kg^2",
+        "3 x 10^8 m/s"
+    };
+
+    // Calculator frame
     Frame f = new Frame("Smart Themeable calculator");
+    // Constants' Library Frame
+    Frame fc = new Frame("Constants' Library");
+
+    Label lc1[] = new Label[c.length]; // constants
+    // Label lc2[] = new Label[cname.length]; // constants' names
+    // Label lc3[] = new Label[cvalue.length]; // constants' values
 
     Button digitop[] = new Button[dop.length];
 
@@ -359,8 +408,19 @@ class Calculator implements ActionListener
 
     GridLayout g = new GridLayout(5, 5, 10, 10);
 
+    MenuBar menuBar = new MenuBar();
+
+    Menu unit = new Menu("Unit Conversion");
+    Menu library = new Menu("Libraries");
+    Menu themes = new Menu("Themes");
+
+    MenuItem unitlist[] = new MenuItem[u.length];
+    MenuItem liblist[] = new MenuItem[lib.length];
+    MenuItem themelist[] = new MenuItem[th.length];
+
     Calculator()
     {
+        // operator and digit buttons
         for(int i = 0; i < dop.length; i++)
         {
             digitop[i] = new Button(dop[i]);
@@ -372,6 +432,33 @@ class Calculator implements ActionListener
             digitop[i].addActionListener(this);
         }
 
+        // unit menu
+        for(int i = 0; i < u.length; i++)
+        {
+            unitlist[i] = new MenuItem(u[i]);
+            unit.add(unitlist[i]);
+
+            unitlist[i].addActionListener(this);
+        }
+
+        // library menu
+        for(int i = 0; i < lib.length; i++)
+        {
+            liblist[i] = new MenuItem(lib[i]);
+            library.add(liblist[i]);
+
+            liblist[i].addActionListener(this);
+        }
+
+        // theme menu
+        for(int i = 0; i < th.length; i++)
+        {
+            themelist[i]=new MenuItem(th[i]);
+            themes.add(themelist[i]);
+
+            themelist[i].addActionListener(this);
+        }
+
         f.addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent we)
@@ -379,6 +466,12 @@ class Calculator implements ActionListener
                 System.exit(0);
             }
         });
+
+        menuBar.add(unit);
+        menuBar.add(library);
+        menuBar.add(themes);
+
+        f.setMenuBar(menuBar);
 
         tf.setForeground(Color.white);
         tf.setBackground(Color.darkGray);
@@ -455,9 +548,78 @@ class Calculator implements ActionListener
                                             Double.parseDouble(s2);
                                     break;
                         case 24:    ans = Math.tan(Double.parseDouble(s1));
+                                    // angle is assumed to be in radians
                                     break;
                     }
                     tf.setText(Double.toString(ans));
+                }
+            }
+        }
+
+        // changing themes
+        for(i = 0; i < th.length; i++)
+        {
+            if(e.getSource() == themelist[i])
+            {
+                if(i == 0) // Scarlet
+                {
+                    for(int j = 0; j < dop.length; j++)
+                    {
+                        digitop[j].setForeground(Color.white);
+                        digitop[j].setBackground(Color.red.darker().darker());
+                    }
+                    tf.setForeground(Color.white);
+                    tf.setBackground(Color.red.darker().darker());
+
+                    f.setBackground(Color.red.darker());
+                }
+                else if(i == 1) // Azure
+                {
+                    for(int j = 0; j < dop.length; j++)
+                        digitop[j].setBackground(Color.blue.darker().darker());
+
+                    tf.setBackground(Color.blue.darker().darker());
+                    f.setBackground(Color.blue.darker());
+                }
+                else if(i == 2) // Forest
+                {
+                    for(int j = 0; j < dop.length; j++)
+                        digitop[j].setBackground(Color.green.darker().darker());
+
+                    tf.setBackground(Color.green.darker().darker());
+                    f.setBackground(Color.green.darker());
+                }
+                else // Shadow
+                {
+                    for(int j = 0; j < dop.length; j++)
+                        digitop[j].setBackground(Color.darkGray);
+
+                    tf.setBackground(Color.darkGray);
+                    f.setBackground(Color.gray);
+                }
+            }
+        }
+        // libraries
+        int y = 20;
+        for(i = 0; i < lib.length; i++)
+        {
+            if(e.getSource() == liblist[i])
+            {
+                if(i == 0)
+                {
+                    for(int j = 0; j <= 6; j++)
+                    {
+                        lc1[j] = new Label(c[j]);
+                        fc.add(lc1[j]);
+                        y += 40;
+                        lc1[j].setBounds(60, y, 20, 20);
+                        lc1[j].setFont(new Font("serif", Font.BOLD, 13));
+
+                    }
+                    fc.setVisible(true);
+                    fc.setBackground(Color.gray);
+                    fc.setForeground(Color.white);
+                    fc.setSize(300, 500);
                 }
             }
         }
