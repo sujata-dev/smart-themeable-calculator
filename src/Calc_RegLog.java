@@ -42,7 +42,7 @@ public class Calc_RegLog implements ActionListener
     Button buttons[] = new Button[b.length];
 
     static final String JDBC_DRIVERNAME = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql:// localhost/reg";
+    static final String DB_URL = "jdbc:mysql://localhost/reg";
     static final String USER = "root";
     static final String PASS = "root";
 
