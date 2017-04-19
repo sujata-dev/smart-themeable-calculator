@@ -1,28 +1,15 @@
-_HiStOrY_V2_
-use reg
-create table registration
-(
-Username varchar(255),
-email varchar(255),
-primary key(email)
+create database reg;
+
+use reg;
+
+create table registration (
+    username 	varchar(255),
+    email    	varchar(255),
+    password 	varchar(255),
+    cpassword 	varchar(255),
+
+    primary key(email)
 );
-insert into registration values('abc','abc1','def','def')
-;
-insert into registration values(abc,abc1,def,def)
-;
-drop table registration
-;
-create table registration
-(
-username varchar(255),
-email varchar(255),
-primary key(email)
+insert into registration values(
+    'Administrator', 'sujatadev97@gmail.com', 't13', 't13'
 );
-insert into registration values('abc','abc1','def','def');
-show tables
-;
-select * from registration
-;
-select * from registration;
-delete from registration where email='';
-select * from registration;
