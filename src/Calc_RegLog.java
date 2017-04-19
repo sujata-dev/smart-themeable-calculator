@@ -161,7 +161,7 @@ public class Calc_RegLog implements ActionListener
                 con = DriverManager.getConnection(DB_URL, USER, PASS);
 
                 p=con.prepareStatement("insert into registration " +
-                                            "values(?,?,?,?)");
+                                            "values(?, ?, ?, ?)");
 
                 s1 = text[2].getText();
                 s2 = text[3].getText();
@@ -178,7 +178,7 @@ public class Calc_RegLog implements ActionListener
                         p.setString(2, s2);
                         p.setString(3, s3);
                         p.setString(4, s4);
-                        int k=p.executeUpdate();
+                        int k = p.executeUpdate();
 
                         for(i = 1; i <= 2; i++)
                             status[i].setVisible(false);
