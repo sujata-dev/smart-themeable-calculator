@@ -143,7 +143,9 @@ public class Calc_RegLog implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         Connection con = null;
-        Statement stmt = null;
+        // Avoiding SQL injection attacks
+        PreparedStatement p = null;
+        ResultSet rs = null;
 
         int i, flag = 0;
 
@@ -157,7 +159,9 @@ public class Calc_RegLog implements ActionListener
                 Class.forName(JDBC_DRIVERNAME);
 
                 con = DriverManager.getConnection(DB_URL, USER, PASS);
-                stmt = con.createStatement();
+
+                p=con.prepareStatement("insert into registration " +
+                                            "values(?,?,?,?)");
 
                 s1 = text[2].getText();
                 s2 = text[3].getText();
@@ -169,11 +173,12 @@ public class Calc_RegLog implements ActionListener
                 {
                     if(s3.equals(s4))
                     {
-                        sql = "insert into registration " +
-                              "values('" + s1 + "','" + s2 + "','" + s3 + "','"
-                                                                   + s4 + "')";
-
-                        stmt.executeUpdate(sql);
+                        // 1 specifies 1st parameter in the query
+                        p.setString(1, s1);
+                        p.setString(2, s2);
+                        p.setString(3, s3);
+                        p.setString(4, s4);
+                        int k=p.executeUpdate();
 
                         for(i = 1; i <= 2; i++)
                             status[i].setVisible(false);
@@ -207,8 +212,8 @@ public class Calc_RegLog implements ActionListener
                 for(i = 2; i <= 5; i++)
                     text[i].setText("");
 
+                p.close();
                 con.close();
-                stmt.close();
             }
             catch(SQLException se)
             {
@@ -218,8 +223,13 @@ public class Calc_RegLog implements ActionListener
 
                 for(i = 2; i <= 5; i++)
                     text[i].setText("");
+
+                se.printStackTrace();
             }
-            catch(Exception e1) {}
+            catch(Exception e1)
+            {
+                e1.printStackTrace();
+            }
         }
 
         // Login
@@ -230,16 +240,17 @@ public class Calc_RegLog implements ActionListener
                 Class.forName(JDBC_DRIVERNAME);
 
                 con = DriverManager.getConnection(DB_URL, USER, PASS);
-                stmt = con.createStatement();
 
                 flag = 0;
 
                 s5 = text[0].getText();
 
-                sql = "select password from registration " + "where email='" +
-                                                                    s5 + "'";
+                p=con.prepareStatement("select password from registration " +
+                                            "where email = ?");
 
-                ResultSet rs = stmt.executeQuery(sql);
+                p.setString(1, s5);
+
+                rs = p.executeQuery();
 
                 s6 = text[1].getText();
 
@@ -275,6 +286,8 @@ public class Calc_RegLog implements ActionListener
 
                     status[4].setBounds(45, 300, 190, 40);
                     status[4].setVisible(true);
+                    // Removing access to STC button
+                    b1.setVisible(false);
                 }
                 else
                 {
@@ -291,8 +304,8 @@ public class Calc_RegLog implements ActionListener
                     text[i].setText("");
 
                 rs.close();
+                p.close();
                 con.close();
-                stmt.close();
             }
             catch(SQLException se1)
             {
@@ -310,8 +323,13 @@ public class Calc_RegLog implements ActionListener
 
                 for(i = 0; i <= 1; i++)
                     text[i].setText("");
+
+                se1.printStackTrace();
             }
-            catch(Exception e2) {}
+            catch(Exception e2)
+            {
+                e2.printStackTrace();
+            }
         }
 
         // opening Smart Themeable Calculator
