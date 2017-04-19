@@ -386,7 +386,8 @@ class Calculator implements ActionListener
         "i",
         "h",
         "G",
-        "c"
+        "c",
+        ""
     };
 
     String cname[] = {
@@ -396,7 +397,8 @@ class Calculator implements ActionListener
         "Imaginary unit",
         "Planck’s constant",
         "Gravitational constant",
-        "Speed of light"
+        "Speed of light",
+        ""
     };
 
     String cvalue[] = {
@@ -406,7 +408,8 @@ class Calculator implements ActionListener
         "√-1",
         "6.62607 x 10^(-34) Js",
         "6.67408 x 10^8 Nm^2/kg^2",
-        "3 x 10^8 m/s"
+        "3 x 10^8 m/s",
+        ""
     };
 
     // Calculator frame
@@ -415,8 +418,8 @@ class Calculator implements ActionListener
     Frame fc = new Frame("Constants' Library");
 
     Label lc1[] = new Label[c.length]; // constants
-    // Label lc2[] = new Label[cname.length]; // constants' names
-    // Label lc3[] = new Label[cvalue.length]; // constants' values
+    Label lc2[] = new Label[cname.length]; // constants' names
+    Label lc3[] = new Label[cvalue.length]; // constants' values
 
     Button digitop[] = new Button[dop.length];
 
@@ -477,6 +480,49 @@ class Calculator implements ActionListener
             themelist[i].addActionListener(this);
         }
 
+        int y = 20;
+        // constant labels in constants' library
+        for(int i = 0; i < c.length; i++)
+        {
+            lc1[i] = new Label(c[i]);
+            y += 40;
+            lc1[i].setBounds(30, y, 20, 20);
+            lc1[i].setFont(new Font("default", Font.BOLD, 13));
+            fc.add(lc1[i]);
+        }
+
+        y = 6;
+        // constant name labels in constants' library
+        for(int i = 0; i < cname.length; i++)
+        {
+            lc2[i] = new Label(cname[i]);
+            y += 40;
+            lc2[i].setBounds(70, y, 170, 50);
+            lc2[i].setFont(new Font("default", Font.BOLD, 13));
+            fc.add(lc2[i]);
+        }
+
+        y = 6;
+        // constant value labels in constants' library
+        for(int i = 0; i < cvalue.length; i++)
+        {
+            lc3[i] = new Label(cvalue[i]);
+            y += 40;
+            lc3[i].setBounds(260, y, 220, 50);
+            lc3[i].setFont(new Font("default", Font.BOLD, 13));
+            fc.add(lc3[i]);
+        }
+
+        // Closing Constants' Library Frame
+        fc.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent we)
+            {
+                fc.setVisible(false);
+            }
+        });
+
+        // Closing Calculator frame
         f.addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent we)
@@ -497,6 +543,13 @@ class Calculator implements ActionListener
 
         p.setLayout(g);
 
+        // Constants' Library Frame
+        fc.setBackground(Color.gray);
+        fc.setForeground(Color.white);
+        fc.setSize(500, 400);
+        fc.setLayout(null);
+
+        // For calculator frame
         f.setLayout(new FlowLayout());
         f.add(tf);
         f.add(p);
@@ -617,27 +670,15 @@ class Calculator implements ActionListener
                 }
             }
         }
+
         // libraries
-        int y = 20;
         for(i = 0; i < lib.length; i++)
         {
             if(e.getSource() == liblist[i])
             {
                 if(i == 0)
                 {
-                    for(int j = 0; j <= 6; j++)
-                    {
-                        lc1[j] = new Label(c[j]);
-                        fc.add(lc1[j]);
-                        y += 40;
-                        lc1[j].setBounds(60, y, 20, 20);
-                        lc1[j].setFont(new Font("serif", Font.BOLD, 13));
-
-                    }
                     fc.setVisible(true);
-                    fc.setBackground(Color.gray);
-                    fc.setForeground(Color.white);
-                    fc.setSize(300, 500);
                 }
             }
         }
