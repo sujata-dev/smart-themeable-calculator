@@ -412,14 +412,112 @@ class Calculator implements ActionListener
         ""
     };
 
+    String formulas[] = {
+        "AREAS: ",
+        "Area of circle = π * (radius) * (radius)",
+        "Area of square = (side) * (side)",
+        "Area of rectangle = (length) * (breadth)",
+        "Area of rectangle = 1/2 * (base) * (height)",
+        "TRIGONOMETRIC FORMULAS:",
+        "(tan θ)^2 + 1 = (sec θ)^2",
+        "(cot θ)^2 + 1 = (cosec θ)^2",
+        "(sin θ)^2 + (cos θ)^2 = 1",
+        "LOGARITHMS:",
+        "log(a * b) = log(a) + log(b)",
+        "log(a / b) = log(a) - log(b)",
+        ""
+    };
+
+    String trig[] = {
+        "Angle in degree",
+        "sin",
+        "cos",
+        "tan",
+        "cosec",
+        "sec",
+        "cot",
+        ""
+    };
+
+    String trig_0[] = {
+        "0",
+        "0",
+        "1",
+        "0",
+        "not defined",
+        "1",
+        "not defined",
+        ""
+    };
+
+    String trig_30[] = {
+        "30",
+        "0.5",
+        "0.866",
+        "0.577",
+        "2",
+        "1.154",
+        "1.732",
+        ""
+    };
+
+    String trig_45[] = {
+        "45",
+        "0.707",
+        "0.707",
+        "1",
+        "1.414",
+        "1.414",
+        "1",
+        ""
+    };
+
+    String trig_60[] = {
+        "60",
+        "0.866",
+        "0.5",
+        "1.732",
+        "1.154",
+        "2",
+        "0.577",
+        ""
+    };
+
+    String trig_90[] = {
+        "90",
+        "1",
+        "0",
+        "not defined",
+        "1",
+        "not defined",
+        "0",
+        ""
+    };
+
     // Calculator frame
     Frame f = new Frame("Smart Themeable calculator");
     // Constants' Library Frame
     Frame fc = new Frame("Constants' Library");
+    // Formulas' Library Frame
+    Frame ff = new Frame("Formulas' Library");
+    // Trigonometric Table Frame
+    Frame ft = new Frame("Trigonometric Table");
 
+    // For constants library
     Label lc1[] = new Label[c.length]; // constants
     Label lc2[] = new Label[cname.length]; // constants' names
     Label lc3[] = new Label[cvalue.length]; // constants' values
+
+    // For trigonometric table
+    Label lt1[] = new Label[trig.length]; // trigo functions
+    Label lt2[] = new Label[trig_0.length]; // angles
+    Label lt3[] = new Label[trig_30.length]; // angles
+    Label lt4[] = new Label[trig_45.length]; // angles
+    Label lt5[] = new Label[trig_60.length]; // angles
+    Label lt6[] = new Label[trig_90.length]; // angles
+
+    // For formulas library
+    Label lf1[] = new Label[formulas.length]; // formulas
 
     Button digitop[] = new Button[dop.length];
 
@@ -513,12 +611,107 @@ class Calculator implements ActionListener
             fc.add(lc3[i]);
         }
 
+        y = 6;
+        // formula labels in formulas' library
+        for(int i = 0; i < formulas.length; i++)
+        {
+            lf1[i] = new Label(formulas[i]);
+            y += 40;
+            lf1[i].setBounds(30, y, 340, 50);
+            lf1[i].setFont(new Font("default", Font.BOLD, 13));
+            ff.add(lf1[i]);
+        }
+
+        y = 6;
+        // trigo labels in trigonometric table
+        for(int i = 0; i < trig.length; i++)
+        {
+            lt1[i] = new Label(trig[i]);
+            y += 40;
+            lt1[i].setBounds(30, y, 140, 50);
+            lt1[i].setFont(new Font("default", Font.BOLD, 13));
+            ft.add(lt1[i]);
+        }
+
+        y = 6;
+        // 0 degree labels in trigonometric table
+        for(int i = 0; i < trig_0.length; i++)
+        {
+            lt2[i] = new Label(trig_0[i]);
+            y += 40;
+            lt2[i].setBounds(170, y, 90, 50);
+            lt2[i].setFont(new Font("default", Font.BOLD, 13));
+            ft.add(lt2[i]);
+        }
+
+        y = 6;
+        // 30 degree labels in trigonometric table
+        for(int i = 0; i < trig_30.length; i++)
+        {
+            lt3[i] = new Label(trig_30[i]);
+            y += 40;
+            lt3[i].setBounds(290, y, 90, 50);
+            lt3[i].setFont(new Font("default", Font.BOLD, 13));
+            ft.add(lt3[i]);
+        }
+
+        y = 6;
+        // 45 degree labels in trigonometric table
+        for(int i = 0; i < trig_45.length; i++)
+        {
+            lt4[i] = new Label(trig_45[i]);
+            y += 40;
+            lt4[i].setBounds(390, y, 90, 50);
+            lt4[i].setFont(new Font("default", Font.BOLD, 13));
+            ft.add(lt4[i]);
+        }
+
+        y = 6;
+        // 60 degree labels in trigonometric table
+        for(int i = 0; i < trig_60.length; i++)
+        {
+            lt5[i] = new Label(trig_60[i]);
+            y += 40;
+            lt5[i].setBounds(480, y, 90, 50);
+            lt5[i].setFont(new Font("default", Font.BOLD, 13));
+            ft.add(lt5[i]);
+        }
+
+        y = 6;
+        // 90 degree labels in trigonometric table
+        for(int i = 0; i < trig_90.length; i++)
+        {
+            lt6[i] = new Label(trig_90[i]);
+            y += 40;
+            lt6[i].setBounds(570, y, 90, 50);
+            lt6[i].setFont(new Font("default", Font.BOLD, 13));
+            ft.add(lt6[i]);
+        }
+
+        // Closing Trigonometric Table
+        fc.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent we)
+            {
+                ft.setVisible(false);
+            }
+        });
+
         // Closing Constants' Library Frame
         fc.addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent we)
             {
                 fc.setVisible(false);
+            }
+        });
+
+        // Closing Formulas' Library Frame
+        ff.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent we)
+            {
+                ff.setVisible(false);
             }
         });
 
@@ -548,6 +741,18 @@ class Calculator implements ActionListener
         fc.setForeground(Color.white);
         fc.setSize(500, 400);
         fc.setLayout(null);
+
+        // Formulas' Library Frame
+        ff.setBackground(Color.gray);
+        ff.setForeground(Color.white);
+        ff.setSize(500, 600);
+        ff.setLayout(null);
+
+        // Trigonometric Table Frame
+        ft.setBackground(Color.gray);
+        ft.setForeground(Color.white);
+        ft.setSize(680, 400);
+        ft.setLayout(null);
 
         // For calculator frame
         f.setLayout(new FlowLayout());
@@ -679,6 +884,14 @@ class Calculator implements ActionListener
                 if(i == 0)
                 {
                     fc.setVisible(true);
+                }
+                else if(i == 1)
+                {
+                    ff.setVisible(true);
+                }
+                else
+                {
+                    ft.setVisible(true);
                 }
             }
         }
