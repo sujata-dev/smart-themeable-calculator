@@ -406,9 +406,9 @@ class Calculator implements ActionListener
         "2.71828",
         "0.56714",
         "√-1",
-        "6.62607 x 10^(-34) Js",
-        "6.67408 x 10^8 Nm^2/kg^2",
-        "3 x 10^8 m/s",
+        "6.62607 x 10⁻³⁴ Js",
+        "6.67408 x 10⁸ Nm²/kg²",
+        "3 x 10⁸ m/s",
         ""
     };
 
@@ -419,9 +419,9 @@ class Calculator implements ActionListener
         "Area of rectangle = (length) * (breadth)",
         "Area of rectangle = 1/2 * (base) * (height)",
         "TRIGONOMETRIC FORMULAS:",
-        "(tan θ)^2 + 1 = (sec θ)^2",
-        "(cot θ)^2 + 1 = (cosec θ)^2",
-        "(sin θ)^2 + (cos θ)^2 = 1",
+        "tan²θ + 1 = sec²θ",
+        "cot²θ + 1 = cosec²θ",
+        "sin²θ + cos²θ = 1",
         "LOGARITHMS:",
         "log(a * b) = log(a) + log(b)",
         "log(a / b) = log(a) - log(b)",
@@ -689,7 +689,7 @@ class Calculator implements ActionListener
         }
 
         // Closing Trigonometric Table
-        fc.addWindowListener(new WindowAdapter()
+        ft.addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent we)
             {
