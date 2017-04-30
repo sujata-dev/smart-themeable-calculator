@@ -503,6 +503,9 @@ class Calculator implements ActionListener
     // Trigonometric Table Frame
     Frame ft = new Frame("Trigonometric Table");
 
+    // Length Conversion Frame
+    Frame flc = new Frame("Length Conversion");
+
     // For constants library
     Label lc1[] = new Label[c.length]; // constants
     Label lc2[] = new Label[cname.length]; // constants' names
@@ -519,11 +522,25 @@ class Calculator implements ActionListener
     // For formulas library
     Label lf1[] = new Label[formulas.length]; // formulas
 
+    // Length Conversion
+    Label llc = new Label("Select units for conversion");
+
+    // Length options
+    Choice len_enter = new Choice(); //length to enter
+    Choice len_ans = new Choice(); //length answer
+
+    Button convertbutton = new Button("Convert");
     Button digitop[] = new Button[dop.length];
 
     Panel p = new Panel();
 
+    // Calc display
     TextField tf = new TextField(18);
+
+    // Length Enter display
+    TextField text_len_enter = new TextField(10);
+    // Length Ans display
+    TextField text_len_ans = new TextField(10);
 
     GridLayout g = new GridLayout(5, 5, 10, 10);
 
@@ -688,6 +705,138 @@ class Calculator implements ActionListener
             ft.add(lt6[i]);
         }
 
+        // choice in length enter
+        len_enter.add("metre");
+        len_enter.add("centimetre");
+        len_enter.add("kilometre");
+        len_enter.add("feet");
+        len_enter.add("inch");
+
+        // choice in length ans
+        len_ans.add("metre");
+        len_ans.add("centimetre");
+        len_ans.add("kilometre");
+        len_ans.add("feet");
+        len_ans.add("inch");
+
+        // Label in length conversion
+        llc.setBounds(150, 60, 290, 50);
+        llc.setFont(new Font("serif", Font.BOLD, 16));
+        flc.add(llc);
+
+        // Length enter choice in length conversion
+        len_enter.setBounds(100, 180, 130, 20);
+        len_enter.setBackground(Color.darkGray.darker());
+        flc.add(len_enter);
+
+        // Length ans choice in length conversion
+        len_ans.setBounds(300, 180, 130, 20);
+        len_ans.setBackground(Color.darkGray.darker());
+        flc.add(len_ans);
+
+        // convert button in length conversion
+        convertbutton.setBounds(220, 240, 100, 30);
+        convertbutton.setBackground(Color.darkGray.darker());
+
+        convertbutton.addActionListener(new ActionListener()
+        {
+            String s5, s6, s7;
+            double num1 = 0, num2 = 0;
+            public void actionPerformed(ActionEvent e)
+            {
+                s5 = text_len_enter.getText();
+                num1 = Double.parseDouble(s5);
+                s6 = len_enter.getItem(len_enter.getSelectedIndex());
+                s7 = len_ans.getItem(len_ans.getSelectedIndex());
+                if(s6.equals("metre"))
+                {
+                    if(s7.equals("metre"))
+                        num2 = num1 * 1;
+                    else if(s7.equals("centimetre"))
+                        num2 = num1 * 100;
+                    else if(s7.equals("kilometre"))
+                        num2 = num1 * 0.001;
+                    else if(s7.equals("feet"))
+                        num2 = num1 * 3.28084;
+                    else if(s7.equals("inch"))
+                        num2 = num1 * 39.3701;
+                }
+                else if(s6.equals("centimetre"))
+                {
+
+                    if(s7.equals("metre"))
+                        num2 = num1 * 0.01;
+                    else if(s7.equals("centimetre"))
+                        num2 = num1 * 1;
+                    else if(s7.equals("kilometre"))
+                        num2 = num1 * 0.00001;
+                    else if(s7.equals("feet"))
+                        num2 = num1 * 0.0328084;
+                    else if(s7.equals("inch"))
+                        num2 = num1 * 0.3937008;
+                }
+                else if(s6.equals("kilometre"))
+                {
+                    if(s7.equals("metre"))
+                        num2 = num1 * 1000;
+                    else if(s7.equals("centimetre"))
+                        num2 = num1 * 100000;
+                    else if(s7.equals("kilometre"))
+                        num2 = num1 * 1;
+                    else if(s7.equals("feet"))
+                        num2 = num1 * 3280.84;
+                    else if(s7.equals("inch"))
+                        num2 = num1 * 39370.08;
+                }
+                else if(s6.equals("feet"))
+                {
+                    if(s7.equals("metre"))
+                        num2 = num1 * 0.3048;
+                    else if(s7.equals("centimetre"))
+                        num2 = num1 * 30.48;
+                    else if(s7.equals("kilometre"))
+                        num2 = num1 * 0.0003048;
+                    else if(s7.equals("feet"))
+                        num2 = num1 * 1;
+                    else if(s7.equals("inch"))
+                        num2 = num1 * 12;
+                }
+                else if(s6.equals("inch"))
+                {
+                    if(s7.equals("metre"))
+                        num2 = num1 * 0.0254;
+                    else if(s7.equals("centimetre"))
+                        num2 = num1 * 2.54;
+                    else if(s7.equals("kilometre"))
+                        num2 = num1 * 0.0000254;
+                    else if(s7.equals("feet"))
+                        num2 = num1 * 0.0833333;
+                    else if(s7.equals("inch"))
+                        num2 = num1 * 1;
+                }
+                text_len_ans.setText(Double.toString(num2));
+            }
+        });
+        flc.add(convertbutton);
+
+        // Length enter textbox in length conversion
+        text_len_enter.setBounds(100, 155, 130, 20);
+        flc.add(text_len_enter);
+
+        // Length enter textbox in length conversion
+        text_len_ans.setBounds(300, 155, 130, 20);
+        flc.add(text_len_ans);
+
+
+        // Closing Length Conversion Frame
+        flc.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent we)
+            {
+                flc.setVisible(false);
+            }
+        });
+
         // Closing Trigonometric Table
         ft.addWindowListener(new WindowAdapter()
         {
@@ -754,6 +903,12 @@ class Calculator implements ActionListener
         ft.setSize(680, 400);
         ft.setLayout(null);
 
+        // Length Conversion Frame
+        flc.setBackground(Color.gray.darker());
+        flc.setForeground(Color.white);
+        flc.setSize(550, 330);
+        flc.setLayout(null);
+
         // For calculator frame
         f.setLayout(new FlowLayout());
         f.add(tf);
@@ -766,7 +921,6 @@ class Calculator implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         int i;
-
         for(i = 0; i < dop.length; i++)
         {
             if(e.getSource() == digitop[i])
@@ -895,5 +1049,26 @@ class Calculator implements ActionListener
                 }
             }
         }
+
+        // unit conversion
+        for(i = 0; i < u.length; i++)
+        {
+            if(e.getSource() == unitlist[i])
+            {
+                if(i == 0)  // Length conversion
+                {
+                    flc.setVisible(true);
+                }
+                else if(i == 1)
+                {
+                    //ff.setVisible(true);
+                }
+                else
+                {
+                    //ft.setVisible(true);
+                }
+            }
+        }
+
     }
 }
