@@ -911,7 +911,7 @@ class Calculator implements ActionListener
                     else if(s7.equals("fahrenheit"))
                         num2 = num1 * -457.87;
                     else if(s7.equals("celsius"))
-                        num2 = num1 * -272.15;
+                        num2 = num1 - 273.15;
                 }
                 else if(s6.equals("fahrenheit"))
                 {
@@ -925,7 +925,7 @@ class Calculator implements ActionListener
                 else if(s6.equals("celsius"))
                 {
                     if(s7.equals("kelvin"))
-                        num2 = num1 * 274.15004;
+                        num2 = num1 + 273.15;
                     else if(s7.equals("fahrenheit"))
                         num2 = num1 * 33.800072;
                     else if(s7.equals("celsius"))
