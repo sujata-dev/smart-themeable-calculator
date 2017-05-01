@@ -505,6 +505,10 @@ class Calculator implements ActionListener
 
     // Length Conversion Frame
     Frame flc = new Frame("Length Conversion");
+    // Temperature Conversion Frame
+    Frame ftc = new Frame("Temperature Conversion");
+    // Base Conversion Frame
+    Frame fbc = new Frame("Base Conversion");
 
     // For constants library
     Label lc1[] = new Label[c.length]; // constants
@@ -522,14 +526,32 @@ class Calculator implements ActionListener
     // For formulas library
     Label lf1[] = new Label[formulas.length]; // formulas
 
-    // Length Conversion
+    // Conversion Label for Length
     Label llc = new Label("Select units for conversion");
+    // Conversion Label for Temperature
+    Label ltc = new Label("Select units for conversion");
+    // Conversion Label for Base
+    Label lbc = new Label("Select units for conversion");
 
     // Length options
-    Choice len_enter = new Choice(); //length to enter
-    Choice len_ans = new Choice(); //length answer
+    Choice len_enter = new Choice(); // length to enter
+    Choice len_ans = new Choice(); // length answer
 
-    Button convertbutton = new Button("Convert");
+    // Temperature options
+    Choice temp_enter = new Choice(); // temp to enter
+    Choice temp_ans = new Choice(); // temp answer
+
+    // Base options
+    Choice base_enter = new Choice(); // base to enter
+    Choice base_ans = new Choice(); // base answer
+
+    // Length conversion button
+    Button convert_len_button = new Button("Convert");
+    // Temperature conversion button
+    Button convert_temp_button = new Button("Convert");
+    // Base conversion button
+    Button convert_base_button = new Button("Convert");
+
     Button digitop[] = new Button[dop.length];
 
     Panel p = new Panel();
@@ -541,6 +563,11 @@ class Calculator implements ActionListener
     TextField text_len_enter = new TextField(10);
     // Length Ans display
     TextField text_len_ans = new TextField(10);
+
+    // Temperature Enter display
+    TextField text_temp_enter = new TextField(10);
+    // Temperature Ans display
+    TextField text_temp_ans = new TextField(10);
 
     GridLayout g = new GridLayout(5, 5, 10, 10);
 
@@ -705,6 +732,7 @@ class Calculator implements ActionListener
             ft.add(lt6[i]);
         }
 
+        // For Length Conversion
         // choice in length enter
         len_enter.add("metre");
         len_enter.add("centimetre");
@@ -734,11 +762,19 @@ class Calculator implements ActionListener
         len_ans.setBackground(Color.darkGray.darker());
         flc.add(len_ans);
 
-        // convert button in length conversion
-        convertbutton.setBounds(220, 240, 100, 30);
-        convertbutton.setBackground(Color.darkGray.darker());
+        // Length enter textbox in length conversion
+        text_len_enter.setBounds(100, 155, 130, 20);
+        flc.add(text_len_enter);
 
-        convertbutton.addActionListener(new ActionListener()
+        // Length ans textbox in length conversion
+        text_len_ans.setBounds(300, 155, 130, 20);
+        flc.add(text_len_ans);
+
+        // convert button in length conversion
+        convert_len_button.setBounds(220, 240, 100, 30);
+        convert_len_button.setBackground(Color.darkGray.darker());
+
+        convert_len_button.addActionListener(new ActionListener()
         {
             String s5, s6, s7;
             double num1 = 0, num2 = 0;
@@ -817,15 +853,88 @@ class Calculator implements ActionListener
                 text_len_ans.setText(Double.toString(num2));
             }
         });
-        flc.add(convertbutton);
+        flc.add(convert_len_button);
 
-        // Length enter textbox in length conversion
-        text_len_enter.setBounds(100, 155, 130, 20);
-        flc.add(text_len_enter);
 
-        // Length enter textbox in length conversion
-        text_len_ans.setBounds(300, 155, 130, 20);
-        flc.add(text_len_ans);
+        // For Temperature Conversion
+        // choice in temp enter
+        temp_enter.add("kelvin");
+        temp_enter.add("fahrenheit");
+        temp_enter.add("celsius");
+
+        // choice in temp ans
+        temp_ans.add("kelvin");
+        temp_ans.add("fahrenheit");
+        temp_ans.add("celsius");
+
+        // Label in temp conversion
+        ltc.setBounds(150, 60, 290, 50);
+        ltc.setFont(new Font("serif", Font.BOLD, 16));
+        ftc.add(ltc);
+
+        // temp enter choice in temp conversion
+        temp_enter.setBounds(100, 180, 130, 20);
+        temp_enter.setBackground(Color.darkGray.darker());
+        ftc.add(temp_enter);
+
+        // temp ans choice in temp conversion
+        temp_ans.setBounds(300, 180, 130, 20);
+        temp_ans.setBackground(Color.darkGray.darker());
+        ftc.add(temp_ans);
+
+        // temp enter textbox in temp conversion
+        text_temp_enter.setBounds(100, 155, 130, 20);
+        ftc.add(text_temp_enter);
+
+        // temp ans textbox in temp conversion
+        text_temp_ans.setBounds(300, 155, 130, 20);
+        ftc.add(text_temp_ans);
+
+        // convert button in temp conversion
+        convert_temp_button.setBounds(220, 240, 100, 30);
+        convert_temp_button.setBackground(Color.darkGray.darker());
+
+        convert_temp_button.addActionListener(new ActionListener()
+        {
+            String s5, s6, s7;
+            double num1 = 0, num2 = 0;
+            public void actionPerformed(ActionEvent e)
+            {
+                s5 = text_temp_enter.getText();
+                num1 = Double.parseDouble(s5);
+                s6 = temp_enter.getItem(temp_enter.getSelectedIndex());
+                s7 = temp_ans.getItem(temp_ans.getSelectedIndex());
+                if(s6.equals("kelvin"))
+                {
+                    if(s7.equals("kelvin"))
+                        num2 = num1 * 1;
+                    else if(s7.equals("fahrenheit"))
+                        num2 = num1 * -457.87;
+                    else if(s7.equals("celsius"))
+                        num2 = num1 * -272.15;
+                }
+                else if(s6.equals("fahrenheit"))
+                {
+                    if(s7.equals("kelvin"))
+                        num2 = num1 * 255.928;
+                    else if(s7.equals("fahrenheit"))
+                        num2 = num1 * 1;
+                    else if(s7.equals("celsius"))
+                        num2 = num1 * -17.2222;
+                }
+                else if(s6.equals("celsius"))
+                {
+                    if(s7.equals("kelvin"))
+                        num2 = num1 * 274.15004;
+                    else if(s7.equals("fahrenheit"))
+                        num2 = num1 * 33.800072;
+                    else if(s7.equals("celsius"))
+                        num2 = num1 * 1;
+                }
+                text_temp_ans.setText(Double.toString(num2));
+            }
+        });
+        ftc.add(convert_temp_button);
 
 
         // Closing Length Conversion Frame
@@ -834,6 +943,15 @@ class Calculator implements ActionListener
             public void windowClosing(WindowEvent we)
             {
                 flc.setVisible(false);
+            }
+        });
+
+        // Closing Temperature Conversion Frame
+        ftc.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent we)
+            {
+                ftc.setVisible(false);
             }
         });
 
@@ -908,6 +1026,12 @@ class Calculator implements ActionListener
         flc.setForeground(Color.white);
         flc.setSize(550, 330);
         flc.setLayout(null);
+
+        // Temperature Conversion Frame
+        ftc.setBackground(Color.gray.darker());
+        ftc.setForeground(Color.white);
+        ftc.setSize(550, 330);
+        ftc.setLayout(null);
 
         // For calculator frame
         f.setLayout(new FlowLayout());
@@ -996,27 +1120,27 @@ class Calculator implements ActionListener
                     for(int j = 0; j < dop.length; j++)
                     {
                         digitop[j].setForeground(Color.white);
-                        digitop[j].setBackground(Color.red.darker().darker());
+                        digitop[j].setBackground(Color.red.darker().darker().darker());
                     }
                     tf.setForeground(Color.white);
-                    tf.setBackground(Color.red.darker().darker());
+                    tf.setBackground(Color.red.darker().darker().darker());
 
                     f.setBackground(Color.red.darker());
                 }
                 else if(i == 1) // Azure
                 {
                     for(int j = 0; j < dop.length; j++)
-                        digitop[j].setBackground(Color.blue.darker().darker());
+                        digitop[j].setBackground(Color.blue.darker().darker().darker());
 
-                    tf.setBackground(Color.blue.darker().darker());
+                    tf.setBackground(Color.blue.darker().darker().darker());
                     f.setBackground(Color.blue.darker());
                 }
                 else if(i == 2) // Forest
                 {
                     for(int j = 0; j < dop.length; j++)
-                        digitop[j].setBackground(Color.green.darker().darker());
+                        digitop[j].setBackground(Color.green.darker().darker().darker());
 
-                    tf.setBackground(Color.green.darker().darker());
+                    tf.setBackground(Color.green.darker().darker().darker());
                     f.setBackground(Color.green.darker());
                 }
                 else // Shadow
@@ -1059,9 +1183,9 @@ class Calculator implements ActionListener
                 {
                     flc.setVisible(true);
                 }
-                else if(i == 1)
+                else if(i == 1)     // Temperature conversion
                 {
-                    //ff.setVisible(true);
+                    ftc.setVisible(true);
                 }
                 else
                 {
@@ -1069,6 +1193,5 @@ class Calculator implements ActionListener
                 }
             }
         }
-
     }
 }
