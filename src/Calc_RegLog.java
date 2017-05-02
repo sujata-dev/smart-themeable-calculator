@@ -111,7 +111,6 @@ public class Calc_RegLog implements ActionListener
             status[i].setForeground(Color.white);
         }
 
-        f1.setLayout(new FlowLayout());
         f1.setLayout(null);
 
         labels[0].setBounds(60, 40, 525, 55);
