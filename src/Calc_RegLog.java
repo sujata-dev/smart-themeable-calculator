@@ -569,6 +569,11 @@ class Calculator implements ActionListener
     // Temperature Ans display
     TextField text_temp_ans = new TextField(10);
 
+    // Base Enter display
+    TextField text_base_enter = new TextField(10);
+    // Base Ans display
+    TextField text_base_ans = new TextField(10);
+
     GridLayout g = new GridLayout(5, 5, 10, 10);
 
     MenuBar menuBar = new MenuBar();
@@ -937,6 +942,109 @@ class Calculator implements ActionListener
         ftc.add(convert_temp_button);
 
 
+        // For Base Conversion
+        // choice in base enter
+        base_enter.add("decimal");
+        base_enter.add("binary");
+        base_enter.add("octal");
+        base_enter.add("hexadecimal");
+
+        // choice in base ans
+        base_ans.add("decimal");
+        base_ans.add("binary");
+        base_ans.add("octal");
+        base_ans.add("hexadecimal");
+
+        // Label in base conversion
+        lbc.setBounds(150, 60, 290, 50);
+        lbc.setFont(new Font("serif", Font.BOLD, 16));
+        fbc.add(lbc);
+
+        // base enter choice in base conversion
+        base_enter.setBounds(100, 180, 130, 20);
+        base_enter.setBackground(Color.darkGray.darker());
+        fbc.add(base_enter);
+
+        // base ans choice in base conversion
+        base_ans.setBounds(300, 180, 130, 20);
+        base_ans.setBackground(Color.darkGray.darker());
+        fbc.add(base_ans);
+
+        // base enter textbox in base conversion
+        text_base_enter.setBounds(100, 155, 130, 20);
+        fbc.add(text_base_enter);
+
+        // base ans textbox in base conversion
+        text_base_ans.setBounds(300, 155, 130, 20);
+        fbc.add(text_base_ans);
+
+        // convert button in base conversion
+        convert_base_button.setBounds(220, 240, 100, 30);
+        convert_base_button.setBackground(Color.darkGray.darker());
+
+        convert_base_button.addActionListener(new ActionListener()
+        {
+            String s5, s6, s7;
+            int num1 = 0;
+            public void actionPerformed(ActionEvent e)
+            {
+                s5 = text_base_enter.getText();
+                s6 = base_enter.getItem(base_enter.getSelectedIndex());
+                s7 = base_ans.getItem(base_ans.getSelectedIndex());
+
+                if(s6.equals("decimal"))
+                {
+                    num1 = Integer.parseInt(s5);
+                    if(s7.equals("decimal"))
+                        text_base_ans.setText(Integer.toString(num1));
+                    else if(s7.equals("binary"))
+                        text_base_ans.setText(Integer.toBinaryString(num1));
+                    else if(s7.equals("octal"))
+                        text_base_ans.setText(Integer.toOctalString(num1));
+                    else if(s7.equals("hexadecimal"))
+                        text_base_ans.setText(Integer.toHexString(num1));
+                }
+                else if(s6.equals("binary"))
+                {
+                    num1 = Integer.parseInt(s5, 2);
+                    if(s7.equals("decimal"))
+                        text_base_ans.setText(Integer.toString(num1));
+                    else if(s7.equals("binary"))
+                        text_base_ans.setText(Integer.toBinaryString(num1));
+                    else if(s7.equals("octal"))
+                        text_base_ans.setText(Integer.toOctalString(num1));
+                    else if(s7.equals("hexadecimal"))
+                        text_base_ans.setText(Integer.toHexString(num1));
+                }
+                else if(s6.equals("octal"))
+                {
+                    num1 = Integer.parseInt(s5, 8);
+                    if(s7.equals("decimal"))
+                        text_base_ans.setText(Integer.toString(num1));
+                    else if(s7.equals("binary"))
+                        text_base_ans.setText(Integer.toBinaryString(num1));
+                    else if(s7.equals("octal"))
+                        text_base_ans.setText(Integer.toOctalString(num1));
+                    else if(s7.equals("hexadecimal"))
+                        text_base_ans.setText(Integer.toHexString(num1));
+                }
+                else if(s6.equals("hexadecimal"))
+                {
+                    num1 = Integer.parseInt(s5, 16);
+                    if(s7.equals("decimal"))
+                        text_base_ans.setText(Integer.toString(num1));
+                    else if(s7.equals("binary"))
+                        text_base_ans.setText(Integer.toBinaryString(num1));
+                    else if(s7.equals("octal"))
+                        text_base_ans.setText(Integer.toOctalString(num1));
+                    else if(s7.equals("hexadecimal"))
+                        text_base_ans.setText(Integer.toHexString(num1));
+                }
+            }
+        });
+        fbc.add(convert_base_button);
+
+
         // Closing Length Conversion Frame
         flc.addWindowListener(new WindowAdapter()
         {
@@ -952,6 +1060,15 @@ class Calculator implements ActionListener
             public void windowClosing(WindowEvent we)
             {
                 ftc.setVisible(false);
+            }
+        });
+
+        // Closing Base Conversion Frame
+        fbc.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent we)
+            {
+                fbc.setVisible(false);
             }
         });
 
@@ -1032,6 +1149,12 @@ class Calculator implements ActionListener
         ftc.setForeground(Color.white);
         ftc.setSize(550, 330);
         ftc.setLayout(null);
+
+        // Base Conversion Frame
+        fbc.setBackground(Color.gray.darker());
+        fbc.setForeground(Color.white);
+        fbc.setSize(550, 330);
+        fbc.setLayout(null);
 
         // For calculator frame
         f.setLayout(new FlowLayout());
@@ -1187,9 +1310,9 @@ class Calculator implements ActionListener
                 {
                     ftc.setVisible(true);
                 }
-                else
+                else    // Base conversion
                 {
-                    //ft.setVisible(true);
+                    fbc.setVisible(true);
                 }
             }
         }
