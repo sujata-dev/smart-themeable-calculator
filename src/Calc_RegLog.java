@@ -930,25 +930,31 @@ class Calculator implements ActionListener
                     if(s7.equals("kelvin"))
                         num2 = num1 * 1;
                     else if(s7.equals("fahrenheit"))
-                        num2 = num1 * -457.87;
+                    {
+                        num2 = num1 - 273.15;
+                        num2 = ((9 * num2) + 160) / 5;
+                    }
                     else if(s7.equals("celsius"))
                         num2 = num1 - 273.15;
                 }
                 else if(s6.equals("fahrenheit"))
                 {
                     if(s7.equals("kelvin"))
-                        num2 = num1 * 255.928;
+                    {
+                        num2 = ((5 * num1) - 160) / 9;
+                        num2 = num2 + 273.15;
+                    }
                     else if(s7.equals("fahrenheit"))
                         num2 = num1 * 1;
                     else if(s7.equals("celsius"))
-                        num2 = num1 * -17.2222;
+                        num2 = ((5 * num1) - 160) / 9;
                 }
                 else if(s6.equals("celsius"))
                 {
                     if(s7.equals("kelvin"))
                         num2 = num1 + 273.15;
                     else if(s7.equals("fahrenheit"))
-                        num2 = num1 * 33.800072;
+                        num2 = ((9 * num1) + 160) / 5;
                     else if(s7.equals("celsius"))
                         num2 = num1 * 1;
                 }
