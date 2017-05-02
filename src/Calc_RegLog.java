@@ -41,8 +41,16 @@ public class Calc_RegLog implements ActionListener
 
     Button buttons[] = new Button[b.length];
 
+    // Driver class for mysql is 'com.mysql.jdbc.Driver'
     static final String JDBC_DRIVERNAME = "com.mysql.jdbc.Driver";
+    /* Connection URL for the mysql database is 'jdbc:mysql://localhost/reg'
+        where
+            'mysql' is the database
+            'localhost' is the server name on which mysql is running
+            'reg' is the database name
+    */
     static final String DB_URL = "jdbc:mysql://localhost/reg";
+    // username and password predefined as 'root'
     static final String USER = "root";
     static final String PASS = "root";
 
@@ -133,6 +141,7 @@ public class Calc_RegLog implements ActionListener
         f1.setBackground(Color.gray.darker());
         f1.addWindowListener(new WindowAdapter()
         {
+            // invoked when a window has been closed
             public void windowClosing(WindowEvent we)
             {
                 System.exit(0);
@@ -144,6 +153,7 @@ public class Calc_RegLog implements ActionListener
     {
         Connection con = null;
         // Avoiding SQL injection attacks
+        // Query and data are sent to SQL database separately
         PreparedStatement p = null;
         ResultSet rs = null;
 
@@ -156,11 +166,16 @@ public class Calc_RegLog implements ActionListener
         {
             try
             {
+                /*  to return the Class object for the class with the
+                    specified name */
                 Class.forName(JDBC_DRIVERNAME);
 
+                /*  to establish connection with the specified url,
+                    username and password */
                 con = DriverManager.getConnection(DB_URL, USER, PASS);
 
-                p=con.prepareStatement("insert into registration " +
+                // passing parameter (?) for the values
+                p = con.prepareStatement("insert into registration " +
                                             "values(?, ?, ?, ?)");
 
                 s1 = text[2].getText();
@@ -173,7 +188,7 @@ public class Calc_RegLog implements ActionListener
                 {
                     if(s3.equals(s4))
                     {
-                        // 1 specifies 1st parameter in the query
+                        // 1 specifies setting 1st parameter in the query
                         p.setString(1, s1);
                         p.setString(2, s2);
                         p.setString(3, s3);
@@ -250,6 +265,7 @@ public class Calc_RegLog implements ActionListener
 
                 p.setString(1, s5);
 
+                // executes the select query
                 rs = p.executeQuery();
 
                 s6 = text[1].getText();
